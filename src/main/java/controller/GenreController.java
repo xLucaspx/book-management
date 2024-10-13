@@ -1,12 +1,12 @@
 package controller;
 
-import static utils.Validator.isValidString;
-
-import java.util.Set;
-
 import exceptions.ValidationException;
 import models.Genre;
 import services.GenreServices;
+
+import java.util.Set;
+
+import static utils.Validator.isValidString;
 
 public class GenreController {
 	private final GenreServices genreServices;

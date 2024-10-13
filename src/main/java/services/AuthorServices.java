@@ -1,5 +1,9 @@
 package services;
 
+import exceptions.NotFoundException;
+import models.Author;
+import models.dto.AuthorDto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,10 +13,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import exceptions.NotFoundException;
-import models.Author;
-import models.dto.AuthorDto;
-
 public class AuthorServices extends Services {
 
 	public AuthorServices(Connection con) {
@@ -20,7 +20,8 @@ public class AuthorServices extends Services {
 	}
 
 	public Author getById(int id) {
-		String sql = "SELECT `id`, `name`, `nationality`, countBooksByAuthor(`id`) AS `books_owned` FROM `author` WHERE `id` = ?;";
+		String sql =
+			"SELECT `id`, `name`, `nationality`, countbooksbyauthor(`id`) AS `books_owned` FROM `author` WHERE `id` = ?;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			statement.setInt(1, id);
@@ -35,7 +36,7 @@ public class AuthorServices extends Services {
 	}
 
 	public Set<Author> getAll() {
-		String sql = "SELECT `id`, `name`, `nationality`, countBooksByAuthor(`id`) AS `books_owned` FROM `author`;";
+		String sql = "SELECT `id`, `name`, `nationality`, countbooksbyauthor(`id`) AS `books_owned` FROM `author`;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			Set<Author> authors = transformResultSet(statement);
@@ -47,7 +48,8 @@ public class AuthorServices extends Services {
 
 	public Set<Author> filterByName(String name) {
 		name = "%" + name + "%";
-		String sql = "SELECT `id`, `name`, `nationality`, countBooksByAuthor(`id`) AS `books_owned` FROM `author` WHERE `name` LIKE ?;";
+		String sql =
+			"SELECT `id`, `name`, `nationality`, countbooksbyauthor(`id`) AS `books_owned` FROM `author` WHERE `name` LIKE" + " " + "?;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			statement.setString(1, name);
@@ -60,7 +62,9 @@ public class AuthorServices extends Services {
 
 	public Set<Author> filterByNationality(String nationality) {
 		nationality = "%" + nationality + "%";
-		String sql = "SELECT `id`, `name`, `nationality`, countBooksByAuthor(`id`) AS `books_owned` FROM `author` WHERE `nationality` LIKE ?;";
+		String sql =
+			"SELECT `id`, `name`, `nationality`, countbooksbyauthor(`id`) AS `books_owned` FROM `author` WHERE " +
+			"`nationality`" + " LIKE ?;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			statement.setString(1, nationality);

@@ -1,5 +1,13 @@
 package services;
 
+import exceptions.NotFoundException;
+import models.Author;
+import models.Book;
+import models.Format;
+import models.Genre;
+import models.Publisher;
+import models.dto.BookDto;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -12,18 +20,50 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import exceptions.NotFoundException;
-import models.Author;
-import models.Book;
-import models.Format;
-import models.Genre;
-import models.Publisher;
-import models.dto.BookDto;
-
 public class BookServices extends Services {
-
 	public BookServices(Connection con) {
 		super(con);
+	}
+
+	public Set<Book> filterByTitle(String input) {
+		String sql = """
+			  SELECT
+			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
+			    b.`format`, b.`author_id`, b.`publisher_id`, g.`genre_id`
+			  FROM `book` b
+			    INNER JOIN `book_genre` g ON b.`id` = g.`book_id`
+			  WHERE b.`title` LIKE ?;
+			""";
+
+		try (PreparedStatement statement = con.prepareStatement(sql)) {
+			statement.setString(1, "%%%s%%".formatted(input));
+
+			Set<Book> books = transformResultSet(statement);
+			return books;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public Set<Book> filterByAuthor(String input) {
+		String sql = """
+			  SELECT
+			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
+			    b.`format`, b.`author_id`, b.`publisher_id`, g.`genre_id`
+			  FROM `book` b
+			    INNER JOIN `book_genre` g ON b.`id` = g.`book_id`
+			       INNER JOIN `author` a ON b.`author_id` = a.`id`
+			  WHERE a.`name` LIKE ?;
+			""";
+
+		try (PreparedStatement statement = con.prepareStatement(sql)) {
+			statement.setString(1, "%%%s%%".formatted(input));
+
+			Set<Book> books = transformResultSet(statement);
+			return books;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public Book getById(int id) {

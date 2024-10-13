@@ -1,7 +1,6 @@
 package models;
 
 public class Publisher implements Comparable<Publisher> {
-
 	private int id;
 	private String name;
 	private int booksOwned;
@@ -40,13 +39,13 @@ public class Publisher implements Comparable<Publisher> {
 	}
 
 	@Override
-	public int compareTo(Publisher o) {
-		return name.compareToIgnoreCase(o.getName());
+	public String toString() {
+		return name;
 	}
 
 	@Override
-	public String toString() {
-		return name;
+	public int compareTo(Publisher o) {
+		return name.compareToIgnoreCase(o.getName());
 	}
 
 	public String formatAsJson() {

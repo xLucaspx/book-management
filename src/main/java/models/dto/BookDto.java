@@ -1,18 +1,18 @@
 package models.dto;
 
-import static utils.Isbn.convertToIsbn13;
-import static utils.Isbn.isValidIsbn13;
-import static utils.Validator.isValidString;
-
-import java.time.LocalDate;
-
 import exceptions.ValidationException;
 import models.Author;
 import models.Format;
 import models.Publisher;
 
+import java.time.LocalDate;
+
+import static utils.Isbn.convertToIsbn13;
+import static utils.Isbn.isValidIsbn13;
+import static utils.Validator.isValidString;
+
 public record BookDto(String title, String isbn10, String isbn13, int pages, boolean read, Format format, Author author,
-		Publisher publisher, LocalDate purchaseDate, float price) {
+											Publisher publisher, LocalDate purchaseDate, float price) {
 
 	public BookDto {
 		if (!isValidString(title)) throw new ValidationException("O título do livro deve ser corretamente preenchido!");

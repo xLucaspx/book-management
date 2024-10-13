@@ -80,7 +80,6 @@ public class Isbn {
 
 		// join baseIsbn and checksum
 		String isbn13 = baseIsbn + checksum;
-
 		return isbn13;
 	}
 }

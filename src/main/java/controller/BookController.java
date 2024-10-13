@@ -1,13 +1,14 @@
 package controller;
 
-import java.util.Set;
-
 import models.Author;
 import models.Book;
 import models.Genre;
 import models.Publisher;
 import models.dto.BookDto;
+import models.filters.BookFilter;
 import services.BookServices;
+
+import java.util.Set;
 
 public class BookController {
 	private final BookServices bookServices;
@@ -34,6 +35,14 @@ public class BookController {
 
 	public Set<Book> getAll() {
 		return bookServices.getAll();
+	}
+
+	public Set<Book> filter(String input, BookFilter filter) {
+		return switch (filter) {
+			case TITLE -> bookServices.filterByTitle(input);
+			case AUTHOR -> bookServices.filterByAuthor(input);
+			default -> bookServices.getAll();
+		};
 	}
 
 	// returns the created book

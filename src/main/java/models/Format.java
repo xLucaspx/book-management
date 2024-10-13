@@ -3,10 +3,10 @@ package models;
 public enum Format {
 	HARDCOVER(1, "Capa dura"), PAPERBACK(2, "Brochura"), EBOOK(3, "Ebook"), BOX(4, "Box");
 
-	private int code;
-	private String name;
+	private final int code;
+	private final String name;
 
-	private Format(int code, String name) {
+	Format(int code, String name) {
 		this.code = code;
 		this.name = name;
 	}

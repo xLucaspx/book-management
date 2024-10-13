@@ -1,7 +1,6 @@
 package models;
 
 public class Genre implements Comparable<Genre> {
-
 	private int id;
 	private String name;
 	private int booksOwned;
@@ -40,13 +39,13 @@ public class Genre implements Comparable<Genre> {
 	}
 
 	@Override
-	public int compareTo(Genre o) {
-		return name.compareToIgnoreCase(o.getName());
+	public String toString() {
+		return name;
 	}
 
 	@Override
-	public String toString() {
-		return name;
+	public int compareTo(Genre o) {
+		return name.compareToIgnoreCase(o.getName());
 	}
 
 	public String formatAsJson() {

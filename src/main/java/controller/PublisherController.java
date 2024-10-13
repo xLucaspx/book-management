@@ -1,12 +1,12 @@
 package controller;
 
-import static utils.Validator.isValidString;
+import exceptions.ValidationException;
+import models.Publisher;
+import services.PublisherServices;
 
 import java.util.Set;
 
-import exceptions.ValidationException;
-import models.Publisher;
-import services.PublisherServices;;
+import static utils.Validator.isValidString;
 
 public class PublisherController {
 	private final PublisherServices publisherServices;

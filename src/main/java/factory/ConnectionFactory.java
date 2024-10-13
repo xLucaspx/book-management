@@ -1,15 +1,15 @@
 package factory;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class ConnectionFactory {
-	private final String username = "user01";
-	private final String password = "admin";
-	private final String database = "book_management";
+	private final static String USERNAME = "user01";
+	private final static String PASSWORD = "admin";
+	private final static String DATABASE = "book_management";
 
 	public Connection getConection() {
 		try {
@@ -21,9 +21,9 @@ public class ConnectionFactory {
 
 	private HikariDataSource createDataSource() {
 		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl("jdbc:mysql://localhost:3306/" + database);
-		config.setUsername(username);
-		config.setPassword(password);
+		config.setJdbcUrl("jdbc:mysql://localhost:3306/%s".formatted(DATABASE));
+		config.setUsername(USERNAME);
+		config.setPassword(PASSWORD);
 		config.setMaximumPoolSize(5);
 
 		return new HikariDataSource(config);

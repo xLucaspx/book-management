@@ -1,7 +1,6 @@
 package models;
 
 public class Author implements Comparable<Author> {
-
 	private int id;
 	private String name;
 	private String nationality;
@@ -42,14 +41,7 @@ public class Author implements Comparable<Author> {
 		if (this.getClass() != o.getClass()) return false;
 
 		Author author = (Author) o;
-		return id == author.getId()
-			&& name.equals(author.getName())
-			&& nationality.equals(author.getNationality());
-	}
-
-	@Override
-	public int compareTo(Author o) {
-		return name.compareToIgnoreCase(o.getName());
+		return id == author.getId() && name.equals(author.getName()) && nationality.equals(author.getNationality());
 	}
 
 	@Override
@@ -57,8 +49,17 @@ public class Author implements Comparable<Author> {
 		return name;
 	}
 
+	@Override
+	public int compareTo(Author o) {
+		return name.compareToIgnoreCase(o.getName());
+	}
+
 	public String formatAsJson() {
 		return String.format("Author { id: %d, name: \"%s\", nationality: \"%s\", booksOwned: %d }",
-			id, name, nationality, booksOwned);
+			id,
+			name,
+			nationality,
+			booksOwned
+		);
 	}
 }

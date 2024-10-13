@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Book implements Comparable<Book> {
-
 	private int id;
 	private int pages;
 	private double price;
@@ -22,9 +21,9 @@ public class Book implements Comparable<Book> {
 	private LocalDate purchaseDate;
 	private Set<Genre> genres;
 
-	// constuctor with the required fields
+	// constructor with the required fields
 	public Book(int id, String title, String isbn13, int pages, boolean read, Format format, Author author,
-			Publisher publisher, float price) {
+							Publisher publisher, float price) {
 		this.id = id;
 		this.title = title;
 		this.isbn13 = isbn13;
@@ -118,15 +117,10 @@ public class Book implements Comparable<Book> {
 
 		Book book = (Book) o;
 		return id == book.getId()
-			&& title.equals(book.getTitle())
-			&& isbn13.equals(book.getIsbn13())
-			&& author.equals(book.getAuthor())
-			&& format.equals(book.getFormat());
-	}
-
-	@Override
-	public int compareTo(Book o) {
-		return title.compareToIgnoreCase(o.getTitle());
+					 && title.equals(book.getTitle())
+					 && isbn13.equals(book.getIsbn13())
+					 && author.equals(book.getAuthor())
+					 && format.equals(book.getFormat());
 	}
 
 	@Override
@@ -149,8 +143,14 @@ public class Book implements Comparable<Book> {
 				%s,
 				genres: {\n%s  }
 			}
-						""".formatted(id, title, (isbn10 != null ? isbn10 : "n/c"), isbn13, pages, read,
-				(purchaseDate != null ? DateTimeFormatter.ofPattern("dd/MM/yyyy").format(purchaseDate) : "n/c"), price,
-				format.formatAsJson(), author.formatAsJson(), publisher.formatAsJson(), strGenres);
+			""".formatted(id, title, (isbn10 != null ? isbn10 : "n/c"), isbn13, pages, read,
+			(purchaseDate != null ? DateTimeFormatter.ofPattern("dd/MM/yyyy").format(purchaseDate) : "n/c"), price,
+			format.formatAsJson(), author.formatAsJson(), publisher.formatAsJson(), strGenres
+		);
+	}
+
+	@Override
+	public int compareTo(Book o) {
+		return title.compareToIgnoreCase(o.getTitle());
 	}
 }

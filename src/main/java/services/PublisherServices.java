@@ -1,5 +1,8 @@
 package services;
 
+import exceptions.NotFoundException;
+import models.Publisher;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +12,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import exceptions.NotFoundException;
-import models.Publisher;
-
 public class PublisherServices extends Services {
 
 	public PublisherServices(Connection con) {
@@ -19,7 +19,7 @@ public class PublisherServices extends Services {
 	}
 
 	public Publisher getById(int id) {
-		String sql = "SELECT `id`, `name`, countBooksByPublisher(`id`) AS `books_owned` FROM `publisher` WHERE `id` = ?;";
+		String sql = "SELECT `id`, `name`, countbooksbypublisher(`id`) AS `books_owned` FROM `publisher` WHERE `id` = ?;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			statement.setInt(1, id);
@@ -34,7 +34,7 @@ public class PublisherServices extends Services {
 	}
 
 	public Set<Publisher> getAll() {
-		String sql = "SELECT `id`, `name`, countBooksByPublisher(`id`) AS `books_owned` FROM `publisher`;";
+		String sql = "SELECT `id`, `name`, countbooksbypublisher(`id`) AS `books_owned` FROM `publisher`;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			Set<Publisher> publishers = transformResultSet(statement);
@@ -46,7 +46,8 @@ public class PublisherServices extends Services {
 
 	public Set<Publisher> filterByName(String name) {
 		name = "%" + name + "%";
-		String sql = "SELECT `id`, `name`, countBooksByPublisher(`id`) AS `books_owned` FROM `publisher` WHERE `name` LIKE ?;";
+		String sql =
+			"SELECT `id`, `name`, countbooksbypublisher(`id`) AS `books_owned` FROM `publisher` WHERE `name` LIKE ?;";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
 			statement.setString(1, name);
