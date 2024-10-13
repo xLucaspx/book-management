@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Gerenciamento de livros"/>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+      <Connection code="Constants.BACKGROUND_COLOR" type="code"/>
+    </Property>
+    <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+      <Connection code="Constants.DEFAULT_FONT" type="code"/>
+    </Property>
+    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+      <Connection code="Constants.FONT_COLOR" type="code"/>
+    </Property>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1095, 675]"/>
+    </Property>
+    <Property name="name" type="java.lang.String" value="window" noResource="true"/>
+    <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1145, 675]"/>
+    </Property>
+  </Properties>
+  <AccessibilityProperties>
+    <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Menu principal do sistema de gerenciamento de livros"/>
+  </AccessibilityProperties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="sidebarPanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+              <Component id="desktopPane" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="sidebarPanel" max="32767" attributes="0"/>
+          <Component id="desktopPane" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="sidebarPanel">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Constants.BLUE" type="code"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Constants.WHITE" type="code"/>
+        </Property>
+        <Property name="focusable" type="boolean" value="false"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Constants.DEFAULT_FONT" type="code"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[195, 675]"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="Menu lateral" noResource="true"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Menu lateral"/>
+      </AccessibilityProperties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="listMenusPanel" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="formMenusPanel" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="listMenusPanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="formMenusPanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="309" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="listMenusPanel">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Constants.BLUE" type="code"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Constants.WHITE" type="code"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Constants.DEFAULT_FONT" type="code"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[195, 195]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="Menu de cadastros" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="authorListBtn" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
+                          <Component id="genreListBtn" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
+                          <Component id="publisherListBtn" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
+                          <Component id="bookListBtn" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="listMenusLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="listMenusLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="bookListBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="authorListBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="genreListBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="publisherListBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="listMenusLabel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.MEDIUM_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="listMenusPanel"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Listas"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[280, 20]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="bookListBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Lista de livros"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir a lista de livros"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o listar livros" noResource="true"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="authorListBtn"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookListBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="authorListBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Lista de autores"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir a lista de autores"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o listar autores" noResource="true"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="genreListBtn"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="authorListBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="genreListBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Lista de categorias"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir a lista de categorias"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o listar categorias" noResource="true"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="publisherListBtn"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genreListBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="publisherListBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Lista de editoras"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir a lista de editoras"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o listar editoras" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="publisherListBtnActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="formMenusPanel">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Constants.BLUE" type="code"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Constants.WHITE" type="code"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Constants.DEFAULT_FONT" type="code"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[195, 195]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="Menu de cadastros" noResource="true"/>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Menu de cadastros"/>
+          </AccessibilityProperties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="authorFormBtn" min="-2" pref="195" max="-2" attributes="0"/>
+                          <Component id="genreFormBtn" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
+                          <Component id="publisherFormBtn" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
+                          <Component id="bookFormBtn" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="formMenusLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="formMenusLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="bookFormBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="authorFormBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="genreFormBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="publisherFormBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="formMenusLabel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.MEDIUM_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="formMenusPanel"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cadastros"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[280, 20]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="bookFormBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cadastro de livro"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir o formul&#xe1;rio de cadastro de livros"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o cadastro de livro" noResource="true"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="authorFormBtn"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookFormBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="authorFormBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cadastro de autor"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir o formul&#xe1;rio de cadastro de autores"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o cadastro de autor" noResource="true"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="genreFormBtn"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="authorFormBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="genreFormBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cadastro de categoria"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir o formul&#xe1;rio de cadastro de categorias"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o cadastro de categoria" noResource="true"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="publisherFormBtn"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genreFormBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="publisherFormBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.BLUE" type="code"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.LARGE_FONT" type="code"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Constants.WHITE" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cadastro de editora"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir o formul&#xe1;rio de cadastro de editoras"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                      <Connection PropertyName="color" code="Constants.WHITE" type="code"/>
+                    </MatteColorBorder>
+                  </Border>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[195, 30]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="Bot&#xe3;o cadastro de editora" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formBtnFocusLost"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formBtnMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="publisherFormBtnActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDesktopPane" name="desktopPane">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Constants.BACKGROUND_COLOR" type="code"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[1090, 675]"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="Desktop pane" noResource="true"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Desktop pane"/>
+      </AccessibilityProperties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="1090" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+  </SubComponents>
+</Form>
