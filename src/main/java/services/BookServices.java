@@ -14,9 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,7 +34,7 @@ public class BookServices extends Services {
 			""";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, "%%%s%%".formatted(input.trim()));
+			statement.setString(1, "%%%s%%".formatted(input));
 
 			Set<Book> books = transformResultSet(statement);
 			return books;
@@ -57,7 +55,7 @@ public class BookServices extends Services {
 			""";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, "%%%s%%".formatted(input.trim()));
+			statement.setString(1, "%%%s%%".formatted(input));
 
 			Set<Book> books = transformResultSet(statement);
 			return books;
@@ -79,7 +77,7 @@ public class BookServices extends Services {
 			""";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			input = input.trim().replaceAll("-", "");
+			input = input.replaceAll("-", "");
 			statement.setString(1, "%%%s%%".formatted(input));
 			statement.setString(2, "%%%s%%".formatted(input));
 
@@ -332,9 +330,7 @@ public class BookServices extends Services {
 				books.put(id, book);
 			}
 
-			return Collections.unmodifiableSet(new HashSet<>(books.values()));
-		} catch (SQLException e) {
-			throw e;
+			return Set.copyOf(books.values());
 		}
 	}
 }

@@ -1,78 +1,95 @@
 package views.lists;
 
-import static utils.Lists.getSortedList;
-
-import java.util.Set;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-
 import controller.BookController;
 import factory.ControllerFactory;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+import models.Author;
 import models.Book;
+import models.Format;
+import models.Publisher;
 import models.filters.BookFilter;
 import views.constants.Constants;
 import views.details.BookDetails;
 import views.forms.BookForm;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import java.util.Set;
+
+import static utils.Lists.getSortedList;
+
 public class BookList extends javax.swing.JInternalFrame {
-  private final ControllerFactory controllerFactory;
-  private final BookController bookController;
+	private final ControllerFactory controllerFactory;
+	private final BookController bookController;
 
-  private DefaultTableModel tableModel;
+	private DefaultTableModel tableModel;
+	private Set<Book> books;
 
-  public BookList(ControllerFactory controllerFactory) {
-    this.controllerFactory = controllerFactory;
-    this.bookController = controllerFactory.getBookController();
-    initComponents();
-  }
+	private final Runnable updateView = new Runnable() {
+		@Override
+		public void run() {
+			search();
+			fillTable();
+			totalLabel.setText(String.format("Total encontrado: %d", books.size()));
+		}
+	};
 
-  private void fillTable(Set<Book> books) {
-    tableModel.getDataVector().clear();
+	public BookList(ControllerFactory controllerFactory) {
+		this.controllerFactory = controllerFactory;
+		this.bookController = controllerFactory.getBookController();
+		initComponents();
+		updateView();
+	}
 
-    if (books.isEmpty()) {
-      bookTable.repaint();
-      return;
-    }
+	private void updateView() {
+		SwingUtilities.invokeLater(updateView);
+	}
+	
+		private void fillTable() {
+		tableModel.setRowCount(0);
 
-    var bookList = getSortedList(books);
+		if (books.isEmpty()) {
+			bookTable.repaint();
+			return;
+		}
 
-    bookList.forEach(b -> tableModel.addRow(new Object[]{b.getId(), b.getTitle(), b.getAuthor(), b.getFormat(),
-      b.getPublisher(), b.getPages(), b.isRead() ? "Lido" : "Não lido"}));
-  }
+		var bookList = getSortedList(books);
 
-  private void updateView() {
-    updateView(bookController.getAll());
-    searchInput.setText("");
-    filterCombo.setSelectedIndex(0);
-  }
+		bookList.forEach(b -> tableModel.addRow(new Object[]{b.getId(), b.getTitle(), b.getAuthor(), b.getFormat(),
+			b.getPublisher(), b.getPages(), b.isRead() ? "Lido" : "Não lido"}));
+	}
 
-  private void updateView(Set<Book> books) {
-    this.totalLabel.setText(String.format("Total encontrado: %d", books.size()));
-    fillTable(books);
-  }
+	private void search() {
+		String input = searchInput.getText().trim();
+		BookFilter filter = filterCombo.getItemAt(filterCombo.getSelectedIndex());
 
-  private Book getSelectedBook() {
-    int selectedRow = bookTable.getSelectedRow();
+		if (input.isEmpty() || filter == null) {
+			books = bookController.getAll();
+			return;
+		}
 
-    if (selectedRow == -1 || selectedRow >= tableModel.getRowCount())
-      throw new RuntimeException("Você deve selecionar um livro!");
+		books = bookController.filter(input, filter);
+	}
 
-    var id = (int) tableModel.getValueAt(selectedRow, 0);
-    return bookController.getById(id);
-  }
+		private Book getSelectedBook() {
+		int selectedRow = bookTable.convertRowIndexToModel(bookTable.getSelectedRow());
 
+		if (selectedRow == -1 || selectedRow >= tableModel.getRowCount())
+			throw new RuntimeException("Você deve selecionar um livro!");
+
+		var id = (int) tableModel.getValueAt(selectedRow, 0);
+		return bookController.getById(id);
+	}
+	
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
     title = new javax.swing.JLabel();
     tableScrollPane = new javax.swing.JScrollPane();
-    var books = bookController.getAll();
     String[] columnNames = {
       "ID",
       "Título",
@@ -86,6 +103,17 @@ public class BookList extends javax.swing.JInternalFrame {
       @Override
       public boolean isCellEditable(int row, int column) {
         return false;
+      }
+
+      @Override
+      public Class<?> getColumnClass(int column) {
+        return switch(column) {
+          case 0, 5 -> Integer.class;
+          case 2 -> Author.class;
+          case 3 -> Format.class;
+          case 4 -> Publisher.class;
+          default -> String.class;
+        };
       }
     };
     bookTable = new javax.swing.JTable();
@@ -114,7 +142,6 @@ public class BookList extends javax.swing.JInternalFrame {
     setMinimumSize(null);
     setName("Lista de livros"); // NOI18N
     setNormalBounds(null);
-    setPreferredSize(null);
     setVisible(true);
     addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
       public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -158,6 +185,7 @@ public class BookList extends javax.swing.JInternalFrame {
     tableScrollPane.setMinimumSize(new java.awt.Dimension(840, 500));
     tableScrollPane.setName("Painel da tabela"); // NOI18N
 
+    bookTable.setAutoCreateRowSorter(true);
     bookTable.setBackground(Constants.WHITE);
     bookTable.setFont(Constants.DEFAULT_FONT);
     bookTable.setForeground(Constants.FONT_COLOR);
@@ -189,11 +217,10 @@ public class BookList extends javax.swing.JInternalFrame {
     titleColumn.setPreferredWidth(202);
     authorColumn.setPreferredWidth(188);
     formatColumn.setPreferredWidth(105);
-    publisherColumn.setPreferredWidth(160);
-    pagesColumn.setPreferredWidth(67);
-    statusColumn.setPreferredWidth(73);
+    publisherColumn.setPreferredWidth(155);
+    pagesColumn.setPreferredWidth(73);
+    statusColumn.setPreferredWidth(72);
     tableScrollPane.setViewportView(bookTable);
-    fillTable(books);
 
     detailsButton.setBackground(Constants.BURNT_YELLOW);
     detailsButton.setFont(Constants.LARGE_FONT);
@@ -284,10 +311,10 @@ public class BookList extends javax.swing.JInternalFrame {
     totalLabel.setFont(Constants.MEDIUM_FONT);
     totalLabel.setForeground(Constants.FONT_COLOR);
     totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    totalLabel.setText(String.format("Total encontrado: %d", books.size()));
+    totalLabel.setText("Total encontrado");
+    totalLabel.setToolTipText("");
     totalLabel.setFocusable(false);
     totalLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    totalLabel.setMaximumSize(null);
     totalLabel.setMinimumSize(new java.awt.Dimension(70, 20));
     totalLabel.setName("Total registros"); // NOI18N
     totalLabel.setPreferredSize(new java.awt.Dimension(175, 20));
@@ -482,152 +509,142 @@ public class BookList extends javax.swing.JInternalFrame {
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  private void showInternalFrame(JInternalFrame frame) {
-    getDesktopPane().add(frame);
-    frame.moveToFront();
-    frame.requestFocus();
-  }
+	private void showInternalFrame(JInternalFrame frame) {
+		getDesktopPane().add(frame);
+		frame.moveToFront();
+		frame.requestFocus();
+	}
 
 	private void detailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsButtonActionPerformed
-    try {
-      var selectedBook = getSelectedBook();
-      var view = new BookDetails(controllerFactory, selectedBook);
-      showInternalFrame(view);
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(this, String.format("Erro ao tentar abrir a página do livro:\n%s", e.getMessage()),
-        getTitle(), JOptionPane.ERROR_MESSAGE);
-    }
+		try {
+			var selectedBook = getSelectedBook();
+			var view = new BookDetails(controllerFactory, selectedBook);
+			showInternalFrame(view);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, String.format("Erro ao tentar abrir a página do livro:\n%s", e.getMessage()),
+				getTitle(), JOptionPane.ERROR_MESSAGE);
+		}
 	}//GEN-LAST:event_detailsButtonActionPerformed
 
 	private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-    try {
-      var selectedBook = getSelectedBook();
-      var form = new BookForm(controllerFactory, selectedBook);
-      showInternalFrame(form);
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(this,
-        String.format("Erro ao tentar abrir o formulário de edição de livro:\n%s", e.getMessage()), getTitle(),
-        JOptionPane.ERROR_MESSAGE);
-    }
+		try {
+			var selectedBook = getSelectedBook();
+			var form = new BookForm(controllerFactory, selectedBook);
+			showInternalFrame(form);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this,
+				String.format("Erro ao tentar abrir o formulário de edição de livro:\n%s", e.getMessage()), getTitle(),
+				JOptionPane.ERROR_MESSAGE);
+		}
 	}//GEN-LAST:event_editBtnActionPerformed
 
 	private void statusBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusBtnActionPerformed
-    try {
-      var selectedBook = getSelectedBook();
+		try {
+			var selectedBook = getSelectedBook();
 
-      String[] options = {"Sim", "Não"};
-      String newStatus = selectedBook.isRead() ? "não lido" : "lido";
-      int res = JOptionPane.showOptionDialog(this,
-        String.format("Deseja marcar o livro %s como %s?", selectedBook.getTitle(), newStatus), getTitle(),
-        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			String[] options = {"Sim", "Não"};
+			String newStatus = selectedBook.isRead() ? "não lido" : "lido";
+			int res = JOptionPane.showOptionDialog(this,
+				String.format("Deseja marcar o livro %s como %s?", selectedBook.getTitle(), newStatus), getTitle(),
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
-      if (res != 0) return;
+			if (res != 0) return;
 
-      bookController.updateReadStatus(selectedBook);
-      updateView();
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(this, String.format("Erro ao tentar alterar o status:\n%s", e.getMessage()),
-        getTitle(), JOptionPane.ERROR_MESSAGE);
-    }
+			bookController.updateReadStatus(selectedBook);
+			updateView();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, String.format("Erro ao tentar alterar o status:\n%s", e.getMessage()),
+				getTitle(), JOptionPane.ERROR_MESSAGE);
+		}
 	}//GEN-LAST:event_statusBtnActionPerformed
 
 	private void newBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBtnActionPerformed
-    try {
-      var form = new BookForm(controllerFactory);
-      showInternalFrame(form);
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(this,
-        String.format("Erro ao tentar abrir o formulário de cadastro de livro:\n%s", e.getMessage()), getTitle(),
-        JOptionPane.ERROR_MESSAGE);
-    }
+		try {
+			var form = new BookForm(controllerFactory);
+			showInternalFrame(form);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this,
+				String.format("Erro ao tentar abrir o formulário de cadastro de livro:\n%s", e.getMessage()), getTitle(),
+				JOptionPane.ERROR_MESSAGE);
+		}
 	}//GEN-LAST:event_newBtnActionPerformed
 
 	private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-    try {
-      var selectedBook = getSelectedBook();
+		try {
+			var selectedBook = getSelectedBook();
 
-      String[] options = {"Sim", "Não"};
-      int res = JOptionPane.showOptionDialog(this,
-        String.format("Tem certeza que deseja excluir o livro %s?\nNão é possível desfazer esta ação!",
-          selectedBook.getTitle()),
-        getTitle(), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			String[] options = {"Sim", "Não"};
+			int res = JOptionPane.showOptionDialog(this,
+				String.format("Tem certeza que deseja excluir o livro %s?\nNão é possível desfazer esta ação!",
+					selectedBook.getTitle()),
+				getTitle(), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
-      if (res != 0) return;
+			if (res != 0) return;
 
-      bookController.delete(selectedBook.getId());
-      updateView();
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(this, String.format("Erro ao tentar excluir:\n%s", e.getMessage()), getTitle(),
-        JOptionPane.ERROR_MESSAGE);
-    }
+			bookController.delete(selectedBook.getId());
+			updateView();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, String.format("Erro ao tentar excluir:\n%s", e.getMessage()), getTitle(),
+				JOptionPane.ERROR_MESSAGE);
+		}
 	}//GEN-LAST:event_deleteBtnActionPerformed
 
 	private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-    try {
-      updateView();
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(this,
-        String.format("Erro ao tentar atualizar a tabela de livros:\n%s", e.getMessage()), getTitle(),
-        JOptionPane.ERROR_MESSAGE);
-      System.err.println(e);
-      e.printStackTrace();
-    }
+		try {
+			updateView();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this,
+				String.format("Erro ao tentar atualizar a tabela de livros:\n%s", e.getMessage()), getTitle(),
+				JOptionPane.ERROR_MESSAGE);
+			System.err.println(e);
+			e.printStackTrace();
+		}
 	}//GEN-LAST:event_formInternalFrameActivated
 
-  private void searchInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchInputKeyPressed
-    search();
-  }//GEN-LAST:event_searchInputKeyPressed
+	private void searchInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchInputKeyPressed
+		updateView();
+	}//GEN-LAST:event_searchInputKeyPressed
 
-  private void filterComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterComboActionPerformed
-    search();
-  }//GEN-LAST:event_filterComboActionPerformed
+	private void filterComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterComboActionPerformed
+		updateView();
+	}//GEN-LAST:event_filterComboActionPerformed
 
-  private void searchButtonaddBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonaddBtnMouseEntered
-    var comp = (JButton) evt.getComponent();
-    setActiveBtn(comp);
-  }//GEN-LAST:event_searchButtonaddBtnMouseEntered
+	private void searchButtonaddBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonaddBtnMouseEntered
+		var comp = (JButton) evt.getComponent();
+		setActiveBtn(comp);
+	}//GEN-LAST:event_searchButtonaddBtnMouseEntered
 
-  private void searchButtonaddBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonaddBtnMouseExited
-    var comp = (JButton) evt.getComponent();
-    setInactiveBtn(comp);
-  }//GEN-LAST:event_searchButtonaddBtnMouseExited
+	private void searchButtonaddBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonaddBtnMouseExited
+		var comp = (JButton) evt.getComponent();
+		setInactiveBtn(comp);
+	}//GEN-LAST:event_searchButtonaddBtnMouseExited
 
-  private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-    search();
-  }//GEN-LAST:event_searchButtonActionPerformed
+	private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+		updateView();
+	}//GEN-LAST:event_searchButtonActionPerformed
 
-  private void clearFilterButtonaddBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearFilterButtonaddBtnMouseEntered
-    var comp = (JButton) evt.getComponent();
-    setActiveBtn(comp);
-  }//GEN-LAST:event_clearFilterButtonaddBtnMouseEntered
+	private void clearFilterButtonaddBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearFilterButtonaddBtnMouseEntered
+		var comp = (JButton) evt.getComponent();
+		setActiveBtn(comp);
+	}//GEN-LAST:event_clearFilterButtonaddBtnMouseEntered
 
-  private void clearFilterButtonaddBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearFilterButtonaddBtnMouseExited
-    var comp = (JButton) evt.getComponent();
-    setInactiveBtn(comp);
-  }//GEN-LAST:event_clearFilterButtonaddBtnMouseExited
+	private void clearFilterButtonaddBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearFilterButtonaddBtnMouseExited
+		var comp = (JButton) evt.getComponent();
+		setInactiveBtn(comp);
+	}//GEN-LAST:event_clearFilterButtonaddBtnMouseExited
 
-  private void clearFilterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearFilterButtonActionPerformed
-    updateView();
-  }//GEN-LAST:event_clearFilterButtonActionPerformed
+	private void clearFilterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearFilterButtonActionPerformed
+		searchInput.setText("");
+		updateView();
+	}//GEN-LAST:event_clearFilterButtonActionPerformed
 
-  private void search() {
-    String input = searchInput.getText();
-    BookFilter filter = filterCombo.getItemAt(filterCombo.getSelectedIndex());
+	private void setActiveBtn(JButton btn) {
+		btn.setForeground(Constants.BLUE);
+	}
 
-    if (filter == null) return;
-
-    Set<Book> books = bookController.filter(input, filter);
-    updateView(books);
-  }
-
-  private void setActiveBtn(JButton btn) {
-    btn.setForeground(Constants.BLUE);
-  }
-
-  private void setInactiveBtn(JButton btn) {
-    btn.setForeground(Constants.FONT_COLOR);
-  }
-
+	private void setInactiveBtn(JButton btn) {
+		btn.setForeground(Constants.FONT_COLOR);
+	}
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JTable bookTable;

@@ -202,9 +202,9 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="var publishers = publisherController.getAll();&#xd;&#xa;String[] columnNames = { &quot;ID&quot;, &quot;Nome&quot;, &quot;Livros obtidos&quot; };&#xd;&#xa;tableModel = new DefaultTableModel(columnNames, 0) {&#xd;&#xa;  @Override&#xd;&#xa;    public boolean isCellEditable(int row, int column) {&#xd;&#xa;    return false;&#xd;&#xa;  }&#xd;&#xa;};"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="String[] columnNames = { &quot;ID&quot;, &quot;Nome&quot;, &quot;Livros obtidos&quot; };&#xd;&#xa;tableModel = new DefaultTableModel(columnNames, 0) {&#xd;&#xa;  @Override&#xd;&#xa;    public boolean isCellEditable(int row, int column) {&#xd;&#xa;    return false;&#xd;&#xa;  }&#xd;&#xa;  @Override&#xd;&#xa;  public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;    return switch(column) {&#xd;&#xa;      case 0, 2 -&gt; Integer.class;&#xd;&#xa;      default -&gt; String.class;&#xd;&#xa;    };&#xd;&#xa;  }&#xd;&#xa;};&#xd;&#xa;"/>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableColumn idColumn = publisherTable.getColumnModel().getColumn(0);&#xd;&#xa;TableColumn nameColumn = publisherTable.getColumnModel().getColumn(1);&#xd;&#xa;TableColumn booksOwnedColumn = publisherTable.getColumnModel().getColumn(2);&#xd;&#xa;&#xd;&#xa;idColumn.setPreferredWidth(100);&#xd;&#xa;nameColumn.setPreferredWidth(255);&#xd;&#xa;booksOwnedColumn.setPreferredWidth(125);"/>
-            <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="fillTable(publishers);&#xd;&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="publisherTable.setAutoCreateRowSorter(true);&#xd;&#xa; "/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -349,14 +349,9 @@
           <Connection code="Constants.FONT_COLOR" type="code"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="String.format(&quot;Total encontrado: %d&quot;, publishers.size())" type="code"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Total encontrado"/>
         <Property name="focusable" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
-        </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[70, 20]"/>
         </Property>

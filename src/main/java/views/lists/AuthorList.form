@@ -203,9 +203,9 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="var authors = authorController.getAll();&#xd;&#xa;String[] columnNames = { &quot;ID&quot;, &quot;Nome&quot;, &quot;Nacionalidade&quot;, &quot;Livros obtidos&quot; };&#xd;&#xa;tableModel = new DefaultTableModel(columnNames, 0) {&#xd;&#xa;  @Override&#xd;&#xa;    public boolean isCellEditable(int row, int column) {&#xd;&#xa;    return false;&#xd;&#xa;  }&#xd;&#xa;};&#xd;&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="String[] columnNames = { &quot;ID&quot;, &quot;Nome&quot;, &quot;Nacionalidade&quot;, &quot;Livros obtidos&quot; };&#xd;&#xa;tableModel = new DefaultTableModel(columnNames, 0) {&#xd;&#xa;  @Override&#xd;&#xa;    public boolean isCellEditable(int row, int column) {&#xd;&#xa;    return false;&#xd;&#xa;  }&#xd;&#xa;&#xd;&#xa;  @Override&#xd;&#xa;  public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;    return switch(column) {&#xd;&#xa;      case 0, 3 -&gt; Integer.class;&#xd;&#xa;      default -&gt; String.class;&#xd;&#xa;    };&#xd;&#xa;  }&#xd;&#xa;};&#xd;&#xa;"/>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableColumn idColumn = authorTable.getColumnModel().getColumn(0);&#xd;&#xa;TableColumn nameColumn = authorTable.getColumnModel().getColumn(1);&#xd;&#xa;TableColumn nationalityColumn = authorTable.getColumnModel().getColumn(2);&#xd;&#xa;TableColumn booksOwnedColumn = authorTable.getColumnModel().getColumn(3);&#xd;&#xa;&#xd;&#xa;idColumn.setPreferredWidth(105);&#xd;&#xa;nameColumn.setPreferredWidth(225);&#xd;&#xa;nationalityColumn.setPreferredWidth(190);&#xd;&#xa;booksOwnedColumn.setPreferredWidth(130);"/>
-            <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="fillTable(authors);&#xd;&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="authorTable.setAutoCreateRowSorter(true);&#xd;&#xa; "/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -350,14 +350,9 @@
           <Connection code="Constants.FONT_COLOR" type="code"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="String.format(&quot;Total encontrado: %d&quot;, authors.size())" type="code"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Total encontrado"/>
         <Property name="focusable" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
-        </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[70, 20]"/>
         </Property>
