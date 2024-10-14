@@ -52,8 +52,8 @@ public class MainMenu extends javax.swing.JFrame {
     formMenusLabel = new javax.swing.JLabel();
     bookFormBtn = new javax.swing.JButton();
     authorFormBtn = new javax.swing.JButton();
-    genreFormBtn = new javax.swing.JButton();
     publisherFormBtn = new javax.swing.JButton();
+    genreFormBtn = new javax.swing.JButton();
     desktopPane = new javax.swing.JDesktopPane();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,9 +61,9 @@ public class MainMenu extends javax.swing.JFrame {
     setBackground(Constants.BACKGROUND_COLOR);
     setFont(Constants.DEFAULT_FONT);
     setForeground(Constants.FONT_COLOR);
-    setMinimumSize(new java.awt.Dimension(1095, 675));
+    setMinimumSize(new java.awt.Dimension(500, 400));
     setName("window"); // NOI18N
-    setSize(new java.awt.Dimension(1145, 675));
+    setSize(new java.awt.Dimension(1325, 695));
 
     sidebarPanel.setBackground(Constants.BLUE);
     sidebarPanel.setForeground(Constants.WHITE);
@@ -86,7 +86,8 @@ public class MainMenu extends javax.swing.JFrame {
     listMenusLabel.setLabelFor(listMenusPanel);
     listMenusLabel.setText("Listas");
     listMenusLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.WHITE));
-    listMenusLabel.setMaximumSize(new java.awt.Dimension(280, 20));
+    listMenusLabel.setMaximumSize(null);
+    listMenusLabel.setMinimumSize(null);
     listMenusLabel.setPreferredSize(null);
 
     bookListBtn.setBackground(Constants.BLUE);
@@ -225,16 +226,16 @@ public class MainMenu extends javax.swing.JFrame {
     listMenusPanelLayout.setHorizontalGroup(
       listMenusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(listMenusPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(listMenusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      .addGroup(listMenusPanelLayout.createSequentialGroup()
         .addGroup(listMenusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(authorListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(genreListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(publisherListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(bookListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(bookListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(publisherListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(0, 0, Short.MAX_VALUE))
-      .addGroup(listMenusPanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(listMenusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     listMenusPanelLayout.setVerticalGroup(
       listMenusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,9 +247,9 @@ public class MainMenu extends javax.swing.JFrame {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(authorListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(genreListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(publisherListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(genreListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -266,7 +267,8 @@ public class MainMenu extends javax.swing.JFrame {
     formMenusLabel.setLabelFor(formMenusPanel);
     formMenusLabel.setText("Cadastros");
     formMenusLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.WHITE));
-    formMenusLabel.setMaximumSize(new java.awt.Dimension(280, 20));
+    formMenusLabel.setMaximumSize(null);
+    formMenusLabel.setMinimumSize(null);
     formMenusLabel.setPreferredSize(null);
 
     bookFormBtn.setBackground(Constants.BLUE);
@@ -335,6 +337,38 @@ public class MainMenu extends javax.swing.JFrame {
       }
     });
 
+    publisherFormBtn.setBackground(Constants.BLUE);
+    publisherFormBtn.setFont(Constants.LARGE_FONT);
+    publisherFormBtn.setForeground(Constants.WHITE);
+    publisherFormBtn.setText("Cadastro de editora");
+    publisherFormBtn.setToolTipText("Abrir o formulário de cadastro de editoras");
+    publisherFormBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.WHITE));
+    publisherFormBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    publisherFormBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    publisherFormBtn.setMinimumSize(new java.awt.Dimension(195, 30));
+    publisherFormBtn.setName("Botão cadastro de editora"); // NOI18N
+    publisherFormBtn.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusGained(java.awt.event.FocusEvent evt) {
+        formBtnFocusGained(evt);
+      }
+      public void focusLost(java.awt.event.FocusEvent evt) {
+        formBtnFocusLost(evt);
+      }
+    });
+    publisherFormBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseEntered(java.awt.event.MouseEvent evt) {
+        formBtnMouseEntered(evt);
+      }
+      public void mouseExited(java.awt.event.MouseEvent evt) {
+        formBtnMouseExited(evt);
+      }
+    });
+    publisherFormBtn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        publisherFormBtnActionPerformed(evt);
+      }
+    });
+
     genreFormBtn.setBackground(Constants.BLUE);
     genreFormBtn.setFont(Constants.LARGE_FONT);
     genreFormBtn.setForeground(Constants.WHITE);
@@ -368,53 +402,21 @@ public class MainMenu extends javax.swing.JFrame {
       }
     });
 
-    publisherFormBtn.setBackground(Constants.BLUE);
-    publisherFormBtn.setFont(Constants.LARGE_FONT);
-    publisherFormBtn.setForeground(Constants.WHITE);
-    publisherFormBtn.setText("Cadastro de editora");
-    publisherFormBtn.setToolTipText("Abrir o formulário de cadastro de editoras");
-    publisherFormBtn.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.WHITE));
-    publisherFormBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    publisherFormBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-    publisherFormBtn.setMinimumSize(new java.awt.Dimension(195, 30));
-    publisherFormBtn.setName("Botão cadastro de editora"); // NOI18N
-    publisherFormBtn.addFocusListener(new java.awt.event.FocusAdapter() {
-      public void focusGained(java.awt.event.FocusEvent evt) {
-        formBtnFocusGained(evt);
-      }
-      public void focusLost(java.awt.event.FocusEvent evt) {
-        formBtnFocusLost(evt);
-      }
-    });
-    publisherFormBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseEntered(java.awt.event.MouseEvent evt) {
-        formBtnMouseEntered(evt);
-      }
-      public void mouseExited(java.awt.event.MouseEvent evt) {
-        formBtnMouseExited(evt);
-      }
-    });
-    publisherFormBtn.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        publisherFormBtnActionPerformed(evt);
-      }
-    });
-
     javax.swing.GroupLayout formMenusPanelLayout = new javax.swing.GroupLayout(formMenusPanel);
     formMenusPanel.setLayout(formMenusPanelLayout);
     formMenusPanelLayout.setHorizontalGroup(
       formMenusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(formMenusPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(formMenusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      .addGroup(formMenusPanelLayout.createSequentialGroup()
         .addGroup(formMenusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(authorFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(genreFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(publisherFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(bookFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(bookFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(genreFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(0, 0, Short.MAX_VALUE))
-      .addGroup(formMenusPanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(formMenusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     formMenusPanelLayout.setVerticalGroup(
       formMenusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,9 +428,9 @@ public class MainMenu extends javax.swing.JFrame {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(authorFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(genreFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(publisherFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(genreFormBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -437,7 +439,6 @@ public class MainMenu extends javax.swing.JFrame {
     sidebarPanelLayout.setHorizontalGroup(
       sidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(sidebarPanelLayout.createSequentialGroup()
-        .addGap(0, 0, 0)
         .addGroup(sidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(listMenusPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(formMenusPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -449,24 +450,25 @@ public class MainMenu extends javax.swing.JFrame {
         .addComponent(listMenusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(formMenusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(0, 309, Short.MAX_VALUE))
+        .addGap(0, 329, Short.MAX_VALUE))
     );
 
     formMenusPanel.getAccessibleContext().setAccessibleName("Menu de cadastros");
 
     desktopPane.setBackground(Constants.BACKGROUND_COLOR);
-    desktopPane.setMinimumSize(new java.awt.Dimension(1090, 675));
+    desktopPane.setMinimumSize(new java.awt.Dimension(1125, 690));
     desktopPane.setName("Desktop pane"); // NOI18N
+    desktopPane.setPreferredSize(new java.awt.Dimension(1125, 690));
 
     javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
     desktopPane.setLayout(desktopPaneLayout);
     desktopPaneLayout.setHorizontalGroup(
       desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 1090, Short.MAX_VALUE)
+      .addGap(0, 1130, Short.MAX_VALUE)
     );
     desktopPaneLayout.setVerticalGroup(
       desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 0, Short.MAX_VALUE)
+      .addGap(0, 695, Short.MAX_VALUE)
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -476,12 +478,12 @@ public class MainMenu extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addComponent(sidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(0, 0, 0)
-        .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1130, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addComponent(sidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-      .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
     );
 
     sidebarPanel.getAccessibleContext().setAccessibleName("Menu lateral");

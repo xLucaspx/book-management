@@ -1,7 +1,7 @@
 package models.filters;
 
 public enum BookFilter {
-	TITLE(1, "Título"), AUTHOR(2, "Autor");
+	TITLE(1, "Título"), AUTHOR(2, "Autor"), ISBN(3, "ISBN");
 
 	private final int code;
 	private final String name;

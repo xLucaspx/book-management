@@ -41,7 +41,7 @@ public class BookController {
 		return switch (filter) {
 			case TITLE -> bookServices.filterByTitle(input);
 			case AUTHOR -> bookServices.filterByAuthor(input);
-			default -> bookServices.getAll();
+			case ISBN -> bookServices.filterByIsbn(input);
 		};
 	}
 

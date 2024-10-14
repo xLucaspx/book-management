@@ -36,7 +36,7 @@ public class BookServices extends Services {
 			""";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, "%%%s%%".formatted(input));
+			statement.setString(1, "%%%s%%".formatted(input.trim()));
 
 			Set<Book> books = transformResultSet(statement);
 			return books;
@@ -57,7 +57,7 @@ public class BookServices extends Services {
 			""";
 
 		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, "%%%s%%".formatted(input));
+			statement.setString(1, "%%%s%%".formatted(input.trim()));
 
 			Set<Book> books = transformResultSet(statement);
 			return books;
@@ -65,6 +65,31 @@ public class BookServices extends Services {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public Set<Book> filterByIsbn(String input) {
+		String sql = """
+			  SELECT
+			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
+			    b.`format`, b.`author_id`, b.`publisher_id`, g.`genre_id`
+			  FROM `book` b
+			    INNER JOIN `book_genre` g ON b.`id` = g.`book_id`
+			  WHERE
+						`isbn_10` LIKE ?
+						OR `isbn_13` LIKE ?;
+			""";
+
+		try (PreparedStatement statement = con.prepareStatement(sql)) {
+			input = input.trim().replaceAll("-", "");
+			statement.setString(1, "%%%s%%".formatted(input));
+			statement.setString(2, "%%%s%%".formatted(input));
+
+			Set<Book> books = transformResultSet(statement);
+			return books;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 	public Book getById(int id) {
 		String sql = """
