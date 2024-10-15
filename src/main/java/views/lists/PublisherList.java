@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.util.Set;
 
-import static utils.Lists.getSortedList;
+import static utils.Lists.toSortedList;
 
 public class PublisherList extends javax.swing.JInternalFrame {
 	private final ControllerFactory controllerFactory;
@@ -52,7 +52,7 @@ public class PublisherList extends javax.swing.JInternalFrame {
 			return;
 		}
 
-		var publisherList = getSortedList(publishers);
+		var publisherList = toSortedList(publishers);
 
 		publisherList.forEach(p -> tableModel.addRow(new Object[]{p.getId(), p.getName(), p.getBooksOwned()}));
 	}

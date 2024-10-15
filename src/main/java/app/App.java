@@ -4,6 +4,7 @@ import views.MainMenu;
 
 /**
  * Application class, responsible for running the system.
+ * Calls on the {@link MainMenu} class.
  *
  * @author Lucas da Paz
  */

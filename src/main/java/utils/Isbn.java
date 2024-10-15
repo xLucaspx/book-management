@@ -1,11 +1,34 @@
 package utils;
 
+/**
+ * Utility class containing static methods regarding ISBN validation
+ * and manipulation.
+ *
+ * @author Lucas da Paz
+ */
 public class Isbn {
 
+	/**
+	 * Checks the validity of a ISBN string. If the string passed as argument
+	 * has a length of exactly 10 characters, then the method {@link #isValidIsbn10}
+	 * is called; otherwise, the {@link #isValidIsbn13} method is called.
+	 *
+	 * @param isbn The ISBN string to be verified; must contain only valid digits,
+	 *             i.e. {@code 0-9} for ISBN-13 and and the additional {@code X}
+	 *             for ISBN-10.
+	 * @return {@code true} if the ISBN is valid, {@code false} otherwise.
+	 */
 	public static boolean isValidIsbn(String isbn) {
 		return isbn.length() == 10 ? isValidIsbn10(isbn) : isValidIsbn13(isbn);
 	}
 
+	/**
+	 * Validates an ISBN-10 string.
+	 *
+	 * @param isbn The ISBN to be validated; must contain only valid digits
+	 *             (for ISBN-10 this means {@code 0-9} and {@code X}).
+	 * @return {@code true} if the ISBN is valid, {@code false} otherwise.
+	 */
 	public static boolean isValidIsbn10(String isbn) {
 		// length must be 10
 		if (isbn == null || isbn.length() != 10) return false;
@@ -33,6 +56,13 @@ public class Isbn {
 		return (sum % 11 == 0);
 	}
 
+	/**
+	 * Validates an ISBN-13 string.
+	 *
+	 * @param isbn The ISBN to be validated; must contain only valid digits
+	 *             (i.e, {@code 0-9}).
+	 * @return {@code true} if the ISBN is valid, {@code false} otherwise.
+	 */
 	public static boolean isValidIsbn13(String isbn) {
 		// length must be 13
 		if (isbn == null || isbn.length() != 13) return false;
@@ -60,11 +90,19 @@ public class Isbn {
 		return checksum == lastDigit;
 	}
 
+	/**
+	 * Converts an valid ISBN-10 string to it's equivalent ISBN-13.
+	 *
+	 * @param isbn10 The ISBN-10 to be converted.
+	 * @return The corresponding ISBN-13 calculated using a conversion algorithm.
+	 * @throws IllegalArgumentException If the ISBN-10 passed as argument is {@code null} or
+	 *                                  invalid, as verified by the {@link #isValidIsbn10} method.
+	 */
 	public static String convertToIsbn13(String isbn10) {
 		if (!isValidIsbn10(isbn10)) throw new IllegalArgumentException("O ISBN-10 inserido não é válido!");
 
 		// add the '978' prefix to the first 9 digits of ISBN-10
-		String baseIsbn = "978" + isbn10.substring(0, 9);
+		String baseIsbn = "978%s".formatted(isbn10.substring(0, 9));
 
 		// calculating ISBN-13 checksum
 		int sum = 0;
@@ -79,7 +117,6 @@ public class Isbn {
 		if (checksum == 10) checksum = 0;
 
 		// join baseIsbn and checksum
-		String isbn13 = baseIsbn + checksum;
-		return isbn13;
+		return "%s%s".formatted(baseIsbn, checksum);
 	}
 }

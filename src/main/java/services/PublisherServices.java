@@ -12,20 +12,52 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PublisherServices extends Services {
+/**
+ * Service class for manipulating the database regarding {@link Publisher publishers}.
+ *
+ * @author Lucas da Paz
+ */
+public class PublisherServices extends Services<Publisher> {
 
-	public PublisherServices(Connection con) {
-		super(con);
+	/**
+	 * Constructs an instance of {@link PublisherServices}.
+	 *
+	 * @param connection A connection with the systems database,
+	 *                   as provided by the data source.
+	 */
+	public PublisherServices(Connection connection) {
+		super(connection);
 	}
 
+	/**
+	 * Searches the database for all {@link Publisher} records whose name
+	 * matches the string passed as an argument; uses SQL {@code LIKE}.
+	 *
+	 * @param name Filter string.
+	 * @return A set of all occurrences of publisher whose queried attribute
+	 * matches the value passed as an argument.
+	 */
+	public Set<Publisher> filterByName(String name) {
+		String sql =
+			"SELECT `id`, `name`, countbooksbypublisher(`id`) AS `books_owned` FROM `publisher` WHERE `name` LIKE ?;";
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, "%%%s%%".formatted(name));
+			return transformToSet(ps);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public Publisher getById(int id) {
 		String sql = "SELECT `id`, `name`, countbooksbypublisher(`id`) AS `books_owned` FROM `publisher` WHERE `id` = ?;";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, id);
-			Set<Publisher> publishers = transformResultSet(statement);
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, id);
+			Set<Publisher> publishers = transformToSet(ps);
 
-			if (publishers.isEmpty()) throw new NotFoundException("Nenhuma editora encontrada para o id: " + id);
+			if (publishers.isEmpty()) throw new NotFoundException("Nenhuma editora encontrada para o id: %d".formatted(id));
 
 			return publishers.toArray(new Publisher[1])[0];
 		} catch (SQLException e) {
@@ -33,72 +65,63 @@ public class PublisherServices extends Services {
 		}
 	}
 
+	@Override
 	public Set<Publisher> getAll() {
 		String sql = "SELECT `id`, `name`, countbooksbypublisher(`id`) AS `books_owned` FROM `publisher`;";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			Set<Publisher> publishers = transformResultSet(statement);
-			return publishers;
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public Set<Publisher> filterByName(String name) {
-		name = "%" + name + "%";
-		String sql =
-			"SELECT `id`, `name`, countbooksbypublisher(`id`) AS `books_owned` FROM `publisher` WHERE `name` LIKE ?;";
-
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, name);
-			Set<Publisher> publishers = transformResultSet(statement);
-			return publishers;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	// returns the generated id
-	public int create(String publisherName) {
+	@Override
+	public Publisher create(Publisher publisher) {
 		String sql = "INSERT INTO `publisher` (`name`) VALUES (?);";
 
-		try (PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-			statement.setString(1, publisherName);
+		try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			populateStatement(ps, publisher);
 
-			int rowsAffected = statement.executeUpdate();
+			int rowsAffected = ps.executeUpdate();
 			if (rowsAffected == 0) throw new SQLException("Falha ao criar editora, nenhuma linha do banco afetada!");
 
-			int formatId = getGeneratedId(statement);
-			return formatId;
+			int publisherId = getGeneratedId(ps);
+			return getById(publisherId);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void update(int id, String newName) {
+	@Override
+	public Publisher update(Publisher publisher) {
 		String sql = "UPDATE `publisher` SET `name` = ? WHERE `id` = ?;";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, newName);
-			statement.setInt(2, id);
-			statement.execute();
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			populateStatement(ps, publisher);
+			ps.setInt(2, publisher.getId());
+			ps.execute();
+
+			return getById(publisher.getId());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
+	@Override
 	public void delete(int id) {
 		String sql = "DELETE FROM `publisher` WHERE `id` = ?;";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, id);
-			statement.execute();
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, id);
+			ps.execute();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	private Set<Publisher> transformResultSet(PreparedStatement ps) throws SQLException {
+	@Override
+	protected Set<Publisher> transformToSet(PreparedStatement ps) throws SQLException {
 		Set<Publisher> publishers = new HashSet<>();
 
 		try (ResultSet rs = ps.executeQuery()) {
@@ -111,8 +134,11 @@ public class PublisherServices extends Services {
 				publishers.add(publisher);
 			}
 			return Collections.unmodifiableSet(publishers);
-		} catch (Exception e) {
-			throw e;
 		}
+	}
+
+	@Override
+	protected void populateStatement(PreparedStatement ps, Publisher publisher) throws SQLException {
+		ps.setString(1, publisher.getName());
 	}
 }

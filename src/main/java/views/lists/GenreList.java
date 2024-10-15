@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.util.Set;
 
-import static utils.Lists.getSortedList;
+import static utils.Lists.toSortedList;
 
 public class GenreList extends javax.swing.JInternalFrame {
 	private final ControllerFactory controllerFactory;
@@ -52,7 +52,7 @@ public class GenreList extends javax.swing.JInternalFrame {
 			return;
 		}
 		
-		var genreList = getSortedList(genres);
+		var genreList = toSortedList(genres);
 		
 		genreList.forEach(g -> tableModel.addRow(new Object[]{g.getId(), g.getName(), g.getBooksOwned()}));
 	}

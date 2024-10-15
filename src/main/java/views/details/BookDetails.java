@@ -38,7 +38,7 @@ public class BookDetails extends javax.swing.JInternalFrame {
 		this.book = bookController.getById(book.getId());
 		this.author = book.getAuthor();
 		this.publisher = book.getPublisher();
-		this.genres = book.getGenres().toArray(Genre[]::new);
+		this.genres = book.getGenres().toArray(new Genre[3]);
 
 		setTitle(String.format("%s - Livro", book.getTitle()));
 		bookTitle.setText(book.getTitle());
@@ -56,21 +56,23 @@ public class BookDetails extends javax.swing.JInternalFrame {
 
 		deleteBookBtn.setToolTipText(String.format("Excluir o livro %s", book.getTitle()));
 
-		genreLink1.setText(genres[0].getName());
-		genreLink1.setToolTipText(String.format("Abrir a página da categoria %s", genres[0].getName()));
+		var genreLinks = new JTextField[]{
+			genreLink1, genreLink2, genreLink3
+		};
 
-		if (genres.length > 1) {
-			genreLink2.setText(genres[1].getName());
-			genreLink2.setToolTipText(String.format("Abrir a página da categoria %s", genres[1].getName()));
-			genreLink2.setEnabled(true);
-			genreLink2.setFocusable(true);
-		}
-
-		if (genres.length > 2) {
-			genreLink3.setText(genres[2].getName());
-			genreLink3.setToolTipText(String.format("Abrir a página da categoria %s", genres[2].getName()));
-			genreLink3.setEnabled(true);
-			genreLink3.setFocusable(true);
+		for (int i = 0; i < genreLinks.length; i++) {
+			var link = genreLinks[i];
+			if (genres[i] != null) {
+				link.setText(genres[i].getName());
+				link.setToolTipText(String.format("Abrir a página da categoria %s", genres[i].getName()));
+				link.setEnabled(true);
+				link.setFocusable(true);
+			} else {
+				link.setText("");
+				link.setToolTipText("");
+				link.setEnabled(false);
+				link.setFocusable(false);
+			}
 		}
 	}
 

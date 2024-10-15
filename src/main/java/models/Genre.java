@@ -11,6 +11,10 @@ public class Genre implements Comparable<Genre> {
 		this.booksOwned = booksOwned;
 	}
 
+	public Genre(int id, String name) {
+		this(id, name, 0);
+	}
+
 	public int getId() {
 		return id;
 	}

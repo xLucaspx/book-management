@@ -11,6 +11,10 @@ public class Publisher implements Comparable<Publisher> {
 		this.booksOwned = booksOwned;
 	}
 
+	public Publisher(int id, String name) {
+		this(id, name, 0);
+	}
+
 	public int getId() {
 		return id;
 	}

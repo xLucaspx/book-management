@@ -6,7 +6,6 @@ import models.Book;
 import models.Format;
 import models.Genre;
 import models.Publisher;
-import models.dto.BookDto;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,15 +14,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BookServices extends Services {
-	public BookServices(Connection con) {
-		super(con);
+/**
+ * Service class for manipulating the database regarding {@link Book books}.
+ *
+ * @author Lucas da Paz
+ */
+public class BookServices extends Services<Book> {
+
+	/**
+	 * Constructs an instance of {@link BookServices}.
+	 *
+	 * @param connection A connection with the systems database,
+	 *                   as provided by the data source.
+	 */
+	public BookServices(Connection connection) {
+		super(connection);
 	}
 
-	public Set<Book> filterByTitle(String input) {
+	/**
+	 * Searches the database for all {@link Book} records whose title
+	 * matches the string passed as an argument; uses SQL {@code LIKE}.
+	 *
+	 * @param title Filter string.
+	 * @return A set of all occurrences of book whose queried attribute
+	 * matches the value passed as an argument.
+	 */
+	public Set<Book> filterByTitle(String title) {
 		String sql = """
 			  SELECT
 			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
@@ -33,17 +53,24 @@ public class BookServices extends Services {
 			  WHERE b.`title` LIKE ?;
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, "%%%s%%".formatted(input));
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, "%%%s%%".formatted(title));
 
-			Set<Book> books = transformResultSet(statement);
-			return books;
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public Set<Book> filterByAuthor(String input) {
+	/**
+	 * Searches the database for all {@link Book} records whose author name
+	 * matches the string passed as an argument; uses SQL {@code LIKE}.
+	 *
+	 * @param authorName Filter string.
+	 * @return A set of all occurrences of book whose queried attribute
+	 * matches the value passed as an argument.
+	 */
+	public Set<Book> filterByAuthor(String authorName) {
 		String sql = """
 			  SELECT
 			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
@@ -54,17 +81,24 @@ public class BookServices extends Services {
 			  WHERE a.`name` LIKE ?;
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, "%%%s%%".formatted(input));
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, "%%%s%%".formatted(authorName));
 
-			Set<Book> books = transformResultSet(statement);
-			return books;
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public Set<Book> filterByIsbn(String input) {
+	/**
+	 * Searches the database for all {@link Book} records whose ISBN-10
+	 * or ISBN-13 matches the string passed as an argument; uses SQL {@code LIKE}.
+	 *
+	 * @param isbn Filter string.
+	 * @return A set of all occurrences of book whose queried attribute
+	 * matches the value passed as an argument.
+	 */
+	public Set<Book> filterByIsbn(String isbn) {
 		String sql = """
 			  SELECT
 			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
@@ -76,41 +110,24 @@ public class BookServices extends Services {
 						OR `isbn_13` LIKE ?;
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			input = input.replaceAll("-", "");
-			statement.setString(1, "%%%s%%".formatted(input));
-			statement.setString(2, "%%%s%%".formatted(input));
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, "%%%s%%".formatted(isbn));
+			ps.setString(2, "%%%s%%".formatted(isbn));
 
-			Set<Book> books = transformResultSet(statement);
-			return books;
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-
-	public Book getById(int id) {
-		String sql = """
-			  SELECT
-			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
-			    b.`format`, b.`author_id`, b.`publisher_id`, g.`genre_id`
-			  FROM `book` b
-			    INNER JOIN `book_genre` g ON b.`id` = g.`book_id`
-			   WHERE b.`id` = ?;
-			""";
-
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, id);
-			Set<Book> books = transformResultSet(statement);
-
-			if (books.isEmpty()) throw new NotFoundException("Nenhum livro encontrado para o id: " + id);
-
-			return books.toArray(new Book[1])[0];
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
+	/**
+	 * Queries the database for all {@link Book} records whose {@link Author}
+	 * is exactly the same as the one passed as an argument; identification
+	 * is performed using primary keys.
+	 *
+	 * @param author The reference author.
+	 * @return A set of all occurrences of book with the corresponding author.
+	 */
 	public Set<Book> getByAuthor(Author author) {
 		String sql = """
 			  SELECT
@@ -121,16 +138,23 @@ public class BookServices extends Services {
 			  WHERE b.`author_id` = ?;
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, author.getId());
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, author.getId());
 
-			Set<Book> books = transformResultSet(statement);
-			return books;
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
+	/**
+	 * Queries the database for all {@link Book} records whose {@link Publisher}
+	 * is exactly the same as the one passed as an argument; identification
+	 * is performed using primary keys.
+	 *
+	 * @param publisher The reference publisher.
+	 * @return A set of all occurrences of book with the corresponding publisher.
+	 */
 	public Set<Book> getByPublisher(Publisher publisher) {
 		String sql = """
 			  SELECT
@@ -141,16 +165,23 @@ public class BookServices extends Services {
 			  WHERE b.`publisher_id` = ?;
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, publisher.getId());
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, publisher.getId());
 
-			Set<Book> books = transformResultSet(statement);
-			return books;
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
+	/**
+	 * Queries the database for all {@link Book} records whose {@link Genre}
+	 * is exactly the same as the one passed as an argument; identification
+	 * is performed using primary keys.
+	 *
+	 * @param genre The reference genre.
+	 * @return A set of all occurrences of book with the corresponding genre.
+	 */
 	public Set<Book> getByGenre(Genre genre) {
 		String sql = """
 			  SELECT
@@ -161,16 +192,96 @@ public class BookServices extends Services {
 			  WHERE g.`genre_id` = ?;
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, genre.getId());
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, genre.getId());
 
-			Set<Book> books = transformResultSet(statement);
-			return books;
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
+	/**
+	 * Inserts into the database a link between a {@link Book} and
+	 * the {@link Genre} passed as arguments.
+	 *
+	 * @param bookId The ID of the book to link the genre to.
+	 * @param genre  The genre to link.
+	 */
+	private void addGenre(int bookId, Genre genre) {
+		String sql = "INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES (?, ?);";
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, bookId);
+			ps.setInt(2, genre.getId());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Removes form the database a link, if any, between the
+	 * {@link Book} with corresponding ID and the {@link Genre}
+	 * passed as argument.
+	 *
+	 * @param bookId The ID of the book to unlink the genre from.
+	 * @param genre  The genre to unlink.
+	 */
+	public void removeGenre(int bookId, Genre genre) {
+		String sql = "DELETE FROM `book_genre` WHERE `book_id` = ? AND `genre_id` = ?;";
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, bookId);
+			ps.setInt(2, genre.getId());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Updates the read status of the {@link Book} passed as an argument
+	 * with the value returned from {@link Book#isRead}.
+	 *
+	 * @param book The book being updated.
+	 */
+	public void updateReadStatus(Book book) {
+		String sql = "UPDATE `book` SET `read`= ? WHERE `id` = ?;";
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setBoolean(1, book.isRead());
+			ps.setInt(2, book.getId());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public Book getById(int id) {
+		String sql = """
+			  SELECT
+			    b.`id`, b.`title`, b.`isbn_10`, b.`isbn_13`, b.`pages`, b.`read`, b.`purchase_date`, b.`price`,
+			    b.`format`, b.`author_id`, b.`publisher_id`, g.`genre_id`
+			  FROM `book` b
+			    INNER JOIN `book_genre` g ON b.`id` = g.`book_id`
+			   WHERE b.`id` = ?;
+			""";
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, id);
+			Set<Book> books = transformToSet(ps);
+
+			if (books.isEmpty()) throw new NotFoundException("Nenhum livro encontrado para o id: %d".formatted(id));
+
+			return books.toArray(new Book[1])[0];
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public Set<Book> getAll() {
 		String sql = """
 			  SELECT
@@ -180,124 +291,116 @@ public class BookServices extends Services {
 			    INNER JOIN `book_genre` g ON b.`id` = g.`book_id`;
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			Set<Book> books = transformResultSet(statement);
-			return books;
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			return transformToSet(ps);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	// returns the generated id
-	public int create(BookDto bookData) {
+	/**
+	 * {@inheritDoc} Links the created {@link Book} to each {@link Genre} returned
+	 * by {@link Book#getGenres()}.
+	 *
+	 * @param book The instance of book to be inserted into the database.
+	 * @return {@inheritDoc}
+	 */
+	@Override
+	public Book create(Book book) {
 		String sql = """
 				INSERT INTO `book`
 					(`title`, `isbn_10`, `isbn_13`, `pages`, `read`, `format`, `author_id`, `publisher_id`, `purchase_date`, `price`)
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 			""";
 
-		try (PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-			statement.setString(1, bookData.title());
-			statement.setString(2, bookData.isbn10());
-			statement.setString(3, bookData.isbn13());
-			statement.setInt(4, bookData.pages());
-			statement.setBoolean(5, bookData.read());
-			statement.setInt(6, bookData.format().getCode());
-			statement.setInt(7, bookData.author().getId());
-			statement.setInt(8, bookData.publisher().getId());
-			statement.setDate(9, Date.valueOf(bookData.purchaseDate()));
-			statement.setFloat(10, bookData.price());
+		try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			populateStatement(ps, book);
 
-			int rowsAffected = statement.executeUpdate();
+			int rowsAffected = ps.executeUpdate();
 			if (rowsAffected == 0) throw new SQLException("Falha ao criar livro, nenhuma linha do banco afetada");
 
-			int bookId = getGeneratedId(statement);
-			return bookId;
+			int bookId = getGeneratedId(ps);
+
+			book.getGenres().forEach(g -> addGenre(bookId, g));
+
+			return getById(bookId);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void addGenre(int bookId, int genreId) {
-		String sql = "INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES (?, ?);";
-
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, bookId);
-			statement.setInt(2, genreId);
-			statement.execute();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void removeGenre(int bookId, int genreId) {
-		String sql = "DELETE FROM `book_genre` WHERE `book_id` = ? AND `genre_id` = ?;";
-
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, bookId);
-			statement.setInt(2, genreId);
-			statement.execute();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void update(int id, BookDto bookData) {
+	/**
+	 * {@inheritDoc} Retrieves all {@link Genre} occurrences linked to the
+	 * {@link Book} in the database and compares them with those returned by
+	 * the {@link Book#getGenres()} method of the book passed as an argument;
+	 * removes any existing links between those that appear only in the former
+	 * and creates new links for those that appear only in the latter. If a genre
+	 * appears in both sets, no changes are necessary.
+	 *
+	 * @param book The instance of {@link Book} to be updated in the database.
+	 * @return {@inheritDoc}
+	 */
+	@Override
+	public Book update(Book book) {
 		String sql = """
 			UPDATE `book`
 			 SET `title` = ?, `isbn_10` = ?, `isbn_13` = ?, `pages` = ?, `read` = ?,
 			 `format` = ?, `author_id` = ?, `publisher_id` = ?, `purchase_date` = ?, `price` = ?
 			WHERE id = ?;
 			""";
+		int bookId = book.getId();
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setString(1, bookData.title());
-			statement.setString(2, bookData.isbn10());
-			statement.setString(3, bookData.isbn13());
-			statement.setInt(4, bookData.pages());
-			statement.setBoolean(5, bookData.read());
-			statement.setInt(6, bookData.format().getCode());
-			statement.setInt(7, bookData.author().getId());
-			statement.setInt(8, bookData.publisher().getId());
-			statement.setDate(9, Date.valueOf(bookData.purchaseDate()));
-			statement.setFloat(10, bookData.price());
-			statement.setInt(11, id);
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			populateStatement(ps, book);
+			ps.setInt(11, bookId);
+			ps.execute();
 
-			statement.execute();
+			Set<Genre> oldGenres = getById(bookId).getGenres();
+			Set<Genre> newGenres = new HashSet<>(book.getGenres());
+
+			for (Genre g : oldGenres) {
+				if (newGenres.contains(g)) {
+					newGenres.remove(g);
+					continue;
+				}
+				removeGenre(bookId, g);
+			}
+
+			newGenres.forEach(g -> addGenre(bookId, g));
+
+			return book;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void updateReadStatus(Book book) {
-		String sql = "UPDATE `book` SET `read`= ? WHERE `id` = ?;";
-
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setBoolean(1, !book.isRead());
-			statement.setInt(2, book.getId());
-			statement.execute();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
+	@Override
 	public void delete(int id) {
 		String sql = "DELETE FROM `book` WHERE `id` = ?;";
 
-		try (PreparedStatement statement = con.prepareStatement(sql)) {
-			statement.setInt(1, id);
-			statement.execute();
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setInt(1, id);
+			ps.execute();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	private Set<Book> transformResultSet(PreparedStatement ps) throws SQLException {
+	@Override
+	protected Set<Book> transformToSet(PreparedStatement ps) throws SQLException {
 		Map<Integer, Book> books = new HashMap<>();
 
 		try (ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
 				int id = rs.getInt("id");
+				int genreId = rs.getInt("genre_id");
+				Genre genre = new GenreServices(connection).getById(genreId);
+
+				if (books.containsKey(id)) {
+					books.get(id).addGenre(genre);
+					continue;
+				}
+
 				String title = rs.getString("title");
 				String isbn10 = rs.getString("isbn_10");
 				String isbn13 = rs.getString("isbn_13");
@@ -308,17 +411,9 @@ public class BookServices extends Services {
 				String formatName = rs.getString("format");
 				int authorId = rs.getInt("author_id");
 				int publisherId = rs.getInt("publisher_id");
-				int genreId = rs.getInt("genre_id");
 
-				Genre genre = new GenreServices(con).getById(genreId);
-
-				if (books.containsKey(id)) {
-					books.get(id).addGenre(genre);
-					continue;
-				}
-
-				Author author = new AuthorServices(con).getById(authorId);
-				Publisher publisher = new PublisherServices(con).getById(publisherId);
+				Author author = new AuthorServices(connection).getById(authorId);
+				Publisher publisher = new PublisherServices(connection).getById(publisherId);
 				Format format = Format.valueOf(formatName.toUpperCase());
 
 				Book book = new Book(id, title, isbn13, pages, read, format, author, publisher, price);
@@ -332,5 +427,19 @@ public class BookServices extends Services {
 
 			return Set.copyOf(books.values());
 		}
+	}
+
+	@Override
+	protected void populateStatement(PreparedStatement ps, Book book) throws SQLException {
+		ps.setString(1, book.getTitle());
+		ps.setString(2, book.getIsbn10());
+		ps.setString(3, book.getIsbn13());
+		ps.setInt(4, book.getPages());
+		ps.setBoolean(5, book.isRead());
+		ps.setInt(6, book.getFormat().getCode());
+		ps.setInt(7, book.getAuthor().getId());
+		ps.setInt(8, book.getPublisher().getId());
+		ps.setDate(9, Date.valueOf(book.getPurchaseDate()));
+		ps.setFloat(10, book.getPrice());
 	}
 }

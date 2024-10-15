@@ -1,5 +1,7 @@
 package models;
 
+import models.dto.AuthorDto;
+
 public class Author implements Comparable<Author> {
 	private int id;
 	private String name;
@@ -11,6 +13,10 @@ public class Author implements Comparable<Author> {
 		this.name = name;
 		this.nationality = nationality;
 		this.booksOwned = booksOwned;
+	}
+
+	public Author(int id, AuthorDto data) {
+		this(id, data.name(), data.nationality(), 0);
 	}
 
 	public int getId() {

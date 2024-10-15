@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Stores fonts, colors and formatters as constants to be used in views.
+ */
 public class Constants {
 	// fonts
 	public static final Font TITLE_FONT = new Font("Yu Gothic UI Semibold", Font.PLAIN, 24);

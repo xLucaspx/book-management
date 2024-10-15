@@ -1,23 +1,5 @@
 package views.forms;
 
-import static utils.Lists.getSortedList;
-import static utils.Validator.isValidString;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-
 import controller.AuthorController;
 import controller.BookController;
 import controller.GenreController;
@@ -32,6 +14,23 @@ import models.Publisher;
 import models.dto.BookDto;
 import views.constants.Constants;
 import views.details.BookDetails;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
+import static utils.Lists.toSortedList;
+import static utils.Validator.isValidString;
 
 public class BookForm extends javax.swing.JInternalFrame {
 	private final java.text.Format dateFormat = Constants.DATE_FORMATTER.toFormat();
@@ -127,12 +126,12 @@ public class BookForm extends javax.swing.JInternalFrame {
     formatComboModel.insertElementAt(null, 0);
     formatCombo = new javax.swing.JComboBox<>();
     authorLabel = new javax.swing.JLabel();
-    var authorsList = getSortedList(authorController.getAll());
+    var authorsList = toSortedList(authorController.getAll());
     var authorComboModel = new DefaultComboBoxModel<>(authorsList.toArray(Author[]::new));
     authorComboModel.insertElementAt(null, 0);
     authorCombo = new javax.swing.JComboBox<>();
     publisherLabel = new javax.swing.JLabel();
-    var publishersList = getSortedList(publisherController.getAll());
+    var publishersList = toSortedList(publisherController.getAll());
     var publisherComboModel = new DefaultComboBoxModel<>(publishersList.toArray(Publisher[]::new));
     publisherComboModel.insertElementAt(null, 0);
     publisherCombo = new javax.swing.JComboBox<>();
@@ -149,7 +148,7 @@ public class BookForm extends javax.swing.JInternalFrame {
     readCheckbox = new javax.swing.JCheckBox();
     genresPanel = new javax.swing.JPanel();
     genresLabel = new javax.swing.JLabel();
-    var genresList = getSortedList(genreController.getAll());
+    var genresList = toSortedList(genreController.getAll());
     var genresComboModel1 = new DefaultComboBoxModel<>(genresList.toArray(Genre[]::new));
     genresComboModel1.insertElementAt(null, 0);
     genreCombo1 = new javax.swing.JComboBox<>();
@@ -991,13 +990,13 @@ public class BookForm extends javax.swing.JInternalFrame {
 	}
 
 	private void refreshComboBoxes() {
-		var authorsList = getSortedList(authorController.getAll());
+		var authorsList = toSortedList(authorController.getAll());
 		updateComboModel(authorsList.toArray(Author[]::new), authorCombo);
 
-		var publishersList = getSortedList(publisherController.getAll());
+		var publishersList = toSortedList(publisherController.getAll());
 		updateComboModel(publishersList.toArray(Publisher[]::new), publisherCombo);
 
-		var genresList = getSortedList(genreController.getAll());
+		var genresList = toSortedList(genreController.getAll());
 		updateComboModel(genresList.toArray(Genre[]::new), genreCombo1);
 		updateComboModel(genresList.toArray(Genre[]::new), genreCombo2);
 		updateComboModel(genresList.toArray(Genre[]::new), genreCombo3);

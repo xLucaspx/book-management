@@ -1,5 +1,7 @@
 package models;
 
+import models.dto.BookDto;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -9,7 +11,7 @@ import java.util.Set;
 public class Book implements Comparable<Book> {
 	private int id;
 	private int pages;
-	private double price;
+	private float price;
 	private boolean read;
 	private String title;
 	private String isbn10;
@@ -34,6 +36,22 @@ public class Book implements Comparable<Book> {
 		this.publisher = publisher;
 		this.price = price;
 		this.genres = new HashSet<>();
+	}
+
+	public Book(int id, BookDto data, Set<Genre> genres) {
+		this(id,
+			data.title(),
+			data.isbn13(),
+			data.pages(),
+			data.read(),
+			data.format(),
+			data.author(),
+			data.publisher(),
+			data.price()
+		);
+		isbn10 = data.isbn10();
+		purchaseDate = data.purchaseDate();
+		this.genres = genres;
 	}
 
 	public int getId() {
@@ -92,7 +110,7 @@ public class Book implements Comparable<Book> {
 		this.purchaseDate = purchaseDate;
 	}
 
-	public double getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
@@ -102,6 +120,10 @@ public class Book implements Comparable<Book> {
 
 	public void setReview(String review) {
 		this.review = review;
+	}
+
+	public void toggleRead() {
+		this.read = !read;
 	}
 
 	@Override

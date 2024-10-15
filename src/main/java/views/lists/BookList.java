@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.util.Set;
 
-import static utils.Lists.getSortedList;
+import static utils.Lists.toSortedList;
 
 public class BookList extends javax.swing.JInternalFrame {
 	private final ControllerFactory controllerFactory;
@@ -57,7 +57,7 @@ public class BookList extends javax.swing.JInternalFrame {
 			return;
 		}
 
-		var bookList = getSortedList(books);
+		var bookList = toSortedList(books);
 
 		bookList.forEach(b -> tableModel.addRow(new Object[]{b.getId(), b.getTitle(), b.getAuthor(), b.getFormat(),
 			b.getPublisher(), b.getPages(), b.isRead() ? "Lido" : "Não lido"}));

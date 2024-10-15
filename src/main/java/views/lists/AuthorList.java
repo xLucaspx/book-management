@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.util.Set;
 
-import static utils.Lists.getSortedList;
+import static utils.Lists.toSortedList;
 
 public class AuthorList extends javax.swing.JInternalFrame {
 	private final ControllerFactory controllerFactory;
@@ -52,7 +52,7 @@ public class AuthorList extends javax.swing.JInternalFrame {
 			return;
 		}
 
-		var authorsList = getSortedList(authors);
+		var authorsList = toSortedList(authors);
 
 		authorsList.forEach(
 			a -> tableModel.addRow(new Object[]{a.getId(), a.getName(), a.getNationality(), a.getBooksOwned()}));

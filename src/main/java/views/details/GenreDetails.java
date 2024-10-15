@@ -1,6 +1,6 @@
 package views.details;
 
-import static utils.Lists.getSortedList;
+import static utils.Lists.toSortedList;
 
 import java.util.Set;
 
@@ -44,7 +44,7 @@ public class GenreDetails extends javax.swing.JInternalFrame {
 			return;
 		}
 
-		var booksList = getSortedList(books);
+		var booksList = toSortedList(books);
 
 		booksList.forEach(b -> tableModel.addRow(
 				new Object[] { b.getId(), b.getTitle(), b.getAuthor(), b.getFormat(), b.getPublisher(), b.getPages() }));
