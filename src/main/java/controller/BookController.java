@@ -138,9 +138,8 @@ public class BookController {
 	}
 
 	/**
-	 * Changes the read status of the {@link Book} passed as an argument, i.e., if
-	 * {@code read} was {@code true}, it will be set to {@code false} and vice-versa.
-	 * Persists the new status in the database.
+	 * Changes the read status of the {@link Book} passed as an argument by calling its
+	 * {@link Book#toggleRead toggleRead} method. Persists the new status in the database.
 	 *
 	 * @param b The book being updated.
 	 */

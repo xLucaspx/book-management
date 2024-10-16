@@ -10,6 +10,7 @@ import java.util.Set;
 
 /**
  * Abstract class that encapsulates behavior and attributes of services classes.
+ * Manipulates databases regarding objects of type {@code T}.
  *
  * @param <T> Type of the objects with which this class works.
  * @author Lucas da Paz

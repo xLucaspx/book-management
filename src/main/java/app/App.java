@@ -19,6 +19,10 @@ public class App {
       - avaliar se deve ser utilizado preferred size
     - avaliar a utilização de interfaces para Services e Controller;
     - Testar conversão e validação de ISBN
+
+    updating the model from a thread sounds dangerous. In my opinion, this should be done
+    via invokeLater. Because the general rule is: changes to objects that are used in the
+    UI may only happen in the event dispatching thread.
      */
 
 		new MainMenu().setVisible(true);
